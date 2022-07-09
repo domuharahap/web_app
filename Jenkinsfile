@@ -40,7 +40,7 @@ pipeline {
 	//	  sh "docker images" 
         //}
 	      script {
-		      dockerImage = docker.build ${env.IMAGE_NAME}
+		      dockerImage = docker.build IMAGE_NAME
 	      }
       }
     }
