@@ -47,7 +47,7 @@ pipeline {
         //}
 	      script {
 		      sh "ls"
-		      dockerImage = docker.build IMAGE_NAME
+		      dockerImage = docker.build "domuharahap/web_app:${env.VERSION}-${env.BUILD_NUMBER} -t Dockerfile"
 	      }
       }
     }
