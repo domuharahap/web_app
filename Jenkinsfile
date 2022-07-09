@@ -38,7 +38,7 @@ pipeline {
         //  sh "docker build -t ${env.TAG_DEV} ."
 	//	  sh "docker images" 
         //}
-	DOCKER_IMAGE = docker.build imagename
+	${env.DOCKER_IMAGE} = docker.build imagename
       }
     }
     stage('Docker push to registry'){
@@ -54,9 +54,9 @@ pipeline {
 		  //sh "docker tag domuharahap/web_app:latest ${env.TAG_DEV}"
 		  //sh "docker push ${env.TAG_DEV}"
         //}
-	docker.withRegistry( '', REG_CRED ) {
-            DOCKER_IMAGE.push("$BUILD_NUMBER")
-             DOCKER_IMAGE.push('latest')
+	docker.withRegistry( '', ${env.REG_CRED} ) {
+		${env.DOCKER_IMAGE}.push("$BUILD_NUMBER")
+		${env.DOCKER_IMAGE}.push('latest')
 	}
       }
     }
