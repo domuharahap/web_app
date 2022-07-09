@@ -62,7 +62,6 @@ pipeline {
 			      dockerImage.push('latest')
 		      }
 	      }
-	}
       }
     }
     stage('Deploy to dev namespace') {
