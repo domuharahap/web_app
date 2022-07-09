@@ -57,6 +57,7 @@ pipeline {
 	docker.withRegistry( '', REG_CRED ) {
             DOCKER_IMAGE.push("$BUILD_NUMBER")
              DOCKER_IMAGE.push('latest')
+	}
       }
     }
     stage('Deploy to dev namespace') {
