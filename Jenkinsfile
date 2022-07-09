@@ -24,7 +24,7 @@ pipeline {
     TAG_DEV = "${env.TAG}-${env.VERSION}-${env.BUILD_NUMBER}"
     TAG_STAGING = "${env.TAG}-${env.VERSION}"
     dockerImage = ''
-    REG_CRED = 'dockerhub'	  
+    REG_CRED = 'dockerhub'  
   }
   stages {
     stage('Docker build') {
@@ -38,7 +38,9 @@ pipeline {
         //  sh "docker build -t ${env.TAG_DEV} ."
 	//	  sh "docker images" 
         //}
-	dockerImage = docker.build imagename
+	      script {
+		      dockerImage = docker.build imagename
+	      }
       }
     }
     stage('Docker push to registry'){
@@ -54,9 +56,12 @@ pipeline {
 		  //sh "docker tag domuharahap/web_app:latest ${env.TAG_DEV}"
 		  //sh "docker push ${env.TAG_DEV}"
         //}
-	docker.withRegistry( '', ${env.REG_CRED} ) {
-		dockerImage.push("$BUILD_NUMBER")
-		dockerImage.push('latest')
+	      script {
+		      docker.withRegistry( '', ${env.REG_CRED} ) {
+			      dockerImage.push("$BUILD_NUMBER")
+			      dockerImage.push('latest')
+		      }
+	      }
 	}
       }
     }
