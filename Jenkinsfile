@@ -23,6 +23,8 @@ pipeline {
     TAG = "${env.DOCKER_REGISTRY_URL}:5000/library/${env.ARTEFACT_ID}"
     TAG_DEV = "${env.TAG}-${env.VERSION}-${env.BUILD_NUMBER}"
     TAG_STAGING = "${env.TAG}-${env.VERSION}"
+    DOCKER_IMAGE = ''
+    REG_CRED = 'dockerhub'	  
   }
   stages {
     stage('Docker build') {
@@ -32,10 +34,11 @@ pipeline {
         }
       }
       steps {
-        container('docker') {
-          sh "docker build -t ${env.TAG_DEV} ."
-		  sh "docker images" 
-        }
+        //container('docker') {
+        //  sh "docker build -t ${env.TAG_DEV} ."
+	//	  sh "docker images" 
+        //}
+	DOCKER_IMAGE = docker.build imagename
       }
     }
     stage('Docker push to registry'){
@@ -45,12 +48,15 @@ pipeline {
         }
       }
       steps {
-        container('docker') {
-          sh "docker push ${env.TAG_DEV}"
+        //container('docker') {
+          //sh "docker push ${env.TAG_DEV}"
 		  //sh "docker pull domuharahap/web_app:latest"
 		  //sh "docker tag domuharahap/web_app:latest ${env.TAG_DEV}"
 		  //sh "docker push ${env.TAG_DEV}"
-        }
+        //}
+	docker.withRegistry( '', REG_CRED ) {
+            DOCKER_IMAGE.push("$BUILD_NUMBER")
+             DOCKER_IMAGE.push('latest')
       }
     }
     stage('Deploy to dev namespace') {
