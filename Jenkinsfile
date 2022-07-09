@@ -28,7 +28,7 @@ pipeline {
     stage('Docker build') {
       when {
         expression {
-          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'master'
+          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'main'
         }
       }
       steps {
@@ -41,7 +41,7 @@ pipeline {
     stage('Docker push to registry'){
       when {
         expression {
-          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'master'
+          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'main'
         }
       }
       steps {
@@ -56,7 +56,7 @@ pipeline {
     stage('Deploy to dev namespace') {
       when {
         expression {
-          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'master'
+          return env.BRANCH_NAME ==~ 'release/.*' || env.BRANCH_NAME ==~'main'
         }
       }
       steps {
