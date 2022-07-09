@@ -23,7 +23,7 @@ pipeline {
     TAG = "${env.DOCKER_REGISTRY_URL}:5000/library/${env.ARTEFACT_ID}"
     TAG_DEV = "${env.TAG}-${env.VERSION}-${env.BUILD_NUMBER}"
     TAG_STAGING = "${env.TAG}-${env.VERSION}"
-    DOCKER_IMAGE = ''
+    dockerImage = ''
     REG_CRED = 'dockerhub'	  
   }
   stages {
@@ -38,7 +38,7 @@ pipeline {
         //  sh "docker build -t ${env.TAG_DEV} ."
 	//	  sh "docker images" 
         //}
-	${env.DOCKER_IMAGE} = docker.build imagename
+	dockerImage = docker.build imagename
       }
     }
     stage('Docker push to registry'){
@@ -55,8 +55,8 @@ pipeline {
 		  //sh "docker push ${env.TAG_DEV}"
         //}
 	docker.withRegistry( '', ${env.REG_CRED} ) {
-		${env.DOCKER_IMAGE}.push("$BUILD_NUMBER")
-		${env.DOCKER_IMAGE}.push('latest')
+		dockerImage.push("$BUILD_NUMBER")
+		dockerImage.push('latest')
 	}
       }
     }
