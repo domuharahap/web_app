@@ -40,6 +40,7 @@ pipeline {
 	//	  sh "docker images" 
         //}
 	      script {
+		      sh "ls"
 		      dockerImage = docker.build IMAGE_NAME
 	      }
       }
