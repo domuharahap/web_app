@@ -24,7 +24,8 @@ pipeline {
     TAG_DEV = "${env.TAG}-${env.VERSION}-${env.BUILD_NUMBER}"
     TAG_STAGING = "${env.TAG}-${env.VERSION}"
     dockerImage = ''
-    REG_CRED = 'dockerhub'  
+    REG_CRED = 'dockerhub'
+    IMAGE_NAME = 'domuharahap/web_app'
   }
   stages {
     stage('Docker build') {
@@ -39,7 +40,7 @@ pipeline {
 	//	  sh "docker images" 
         //}
 	      script {
-		      dockerImage = docker.build imagename
+		      dockerImage = docker.build ${env.IMAGE_NAME}
 	      }
       }
     }
