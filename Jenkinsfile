@@ -28,6 +28,12 @@ pipeline {
     IMAGE_NAME = 'domuharahap/web_app'
   }
   stages {
+    stage('Cloning Git') {
+      steps {
+        git([url: 'https://github.com/domuharahap/web_app.git', branch: 'main', credentialsId: 'githubId'])
+
+      }
+    }
     stage('Docker build') {
       when {
         expression {
